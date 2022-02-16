@@ -11,8 +11,10 @@ const MyMinter = (props) => {
     const [status, setStatus] = useState("");
     console.log(props.imgUrl);
     console.log(props.receiver);
+    console.log(props.txn);
     const url = props.imgUrl;
     const receiver = props.receiver;
+    const transaction = props.txn
     const onMintPressed = async () => {
         const { success, status } = await mintNFT(url, name, description, receiver);
         setStatus(status);
@@ -25,22 +27,26 @@ const MyMinter = (props) => {
     return (
         <div className="NewMinter">
             <br></br>
-            <h1 id="title">🧙‍♂️ Alchemy NFT Minter</h1>
-            <p>
+            {/* <h1 id="title">🔥 My Web3 Work Portfolio</h1> */}
+            {/* <p>
                 Simply add your asset's link, name, and description, then press "Mint."
-            </p>
+            </p> */}
             <form>
-                <h2>🤔 Name: </h2>
+                <h3> 💪 Contribution record</h3>
+                <p> Transaction Id: {transaction.hash}</p>
+                <p> Transaction Asset: {transaction.asset}</p>
+                <p> Transaction Value: {transaction.value}</p>
+                <h3>✍️ Work Description: </h3>
                 <input
                     type="text"
-                    placeholder="e.g. My first NFT!"
-                    onChange={(event) => setName(event.target.value)}
-                />
-                <h2>✍️ Description: </h2>
-                <input
-                    type="text"
-                    placeholder="e.g. Even cooler than cryptokitties ;)"
+                    placeholder="e.g. Solidity Programming! "
                     onChange={(event) => setDescription(event.target.value)}
+                />
+                <h3>🤔 Set NFT Name: </h3>
+                <input
+                    type="text"
+                    placeholder="e.g. My Work NFT!"
+                    onChange={(event) => setName(event.target.value)}
                 />
             </form>
             <button id="mintButton" onClick={onMintPressed}>

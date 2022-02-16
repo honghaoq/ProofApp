@@ -79,9 +79,9 @@ const Minter = (props) => {
       var txns = [];
       for (var i = 0; i < transactions.length; i++) {
         var transaction = transactions[i];
-        txns.push(<p> {transaction.value} {transaction.asset}</p>);
-        txns.push(<p> {transaction.hash}</p>);
-        txns.push(<MyMinter imgUrl={url} receiver={walletAddress} />);
+        // txns.push(<p> {transaction.value} {transaction.asset}</p>);
+        // txns.push(<p> {transaction.hash}</p>);
+        txns.push(<MyMinter imgUrl={url} receiver={walletAddress} txn = {transaction}/>);
       }
       return (<div className="Txns">{txns}</div>);
     }
@@ -104,19 +104,27 @@ const Minter = (props) => {
         )}
       </button>
       <br></br>
-      <h1 id="title">🅿️ Get My Proof</h1>
+      <h1 id="title">🅿️ Proof of WORK</h1>
       <p>
-        Simply add your asset's link, name, and description, then press "Mint. for all of your"
+      Turn your wallet into Web3 work portfolio! Get NFTs for your work!
       </p>
-      <h2>✍️ DAO Wallet Address: </h2>
+
+  
+      <h2>✍️ Enter DAO Wallet Address: </h2>
+      <p>
+        Simply add your asset's link, name, and description, to mint NFTs for your work"
+      </p>
       <input
         type="text"
         placeholder="e.g. 0x000"
         onChange={(event) => setDAOAddr(event.target.value)}
       />
       <button id="viewTxns" onClick={onTxnPressed}>
-        View Transactions
+        Get My Proof
       </button>
+
+      <h1 id="title">🔥 My Web3 Work Portfolio</h1>
+      
       <div>
         <Txns></Txns>
       </div>
@@ -124,6 +132,8 @@ const Minter = (props) => {
       <p id="status" style={{ color: "red" }}>
         {status}
       </p>
+
+      
     </div>
   );
 };
