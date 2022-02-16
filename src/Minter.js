@@ -13,11 +13,12 @@ const Minter = (props) => {
   const [walletAddress, setWallet] = useState("");
   const [status, setStatus] = useState("");
   const [dict, setTransaction] = useState({});
+  const [DAOAddr, setDAOAddr] = useState("");
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [receiver, setReceiver] = useState("");
-  const url = "https://gateway.pinata.cloud/ipfs/QmfQvb7QQG5DE6m8tFURE5Uuhu7dRU7TEaxRcSutmEPmQe";
+  const url = "https://gateway.pinata.cloud/ipfs/QmfQvb7QQG5DE6m8tFURE5Uuhu7dRU7TEaxRcSutmEPmQe"; // ProofBadge
 
   useEffect(async () => {
     const { address, status } = await getCurrentWalletConnected();
@@ -69,43 +70,50 @@ const Minter = (props) => {
     }
   };
 
-  const walletAddr = '0x12bd9048b419838e25046040dcd297ab16850280';
-  useEffect(async () => {
-    const txns = await getPayments(walletAddr, '0x41532c0decc835293dd1e3edd47eb5eb7a7677cf');
+  // example DAOAddr = '0x12bd9048b419838e25046040dcd297ab16850280';
+  // example walletAddress = '0x41532c0decc835293dd1e3edd47eb5eb7a7677cf';
+  const onTxnPressed = async () => {
+    const txns = await getPayments(DAOAddr, walletAddress);
     setTransaction(txns);
-  }, []);
+  }
 
   const Txns = (props) => {
-    const myString = JSON.stringify(dict);
-    console.log(myString);
-
-    // const myString = dict.replaceAt(0, "'") +
-    //   // console.log(dict["result"]["transfers"])
-    //   console.log(myString);
-    // try {
-    // const results = JSON.parse(dict);
-    // }
-    // catch (e) {
-    //   alert(e); // error in the above string (in this case, yes)!
-    // }
-    // const results = JSON.parse('{"id": 0, "result": {"transfers": [{"blockNum": "0xd2a6e0", "hash": "0x189ef9fa05061537b8e1898cc7c8c83b321be81c9af5d3c82010ea17d8173baa", "from": "0x12bd9048b419838e25046040dcd297ab16850280", "to": "0x41532c0decc835293dd1e3edd47eb5eb7a7677cf", "value": 565.5534448005341, "erc721TokenId": null, "erc1155Metadata": null, "tokenId": null, "asset": "BANK", "category": "token", "rawContract": {"value": "0x1ea8a1759d9251b180", "address": "0x2d94aa3e47d9d5024503ca8491fce9a2fb4da198", "decimal": "0x12"}}, {"blockNum": "0xd616e3", "hash": "0xa9ed45ccb95a3b31e7258b748e4d75bab9711cff9ce07eedf4ecadc50356f6b5", "from": "0x12bd9048b419838e25046040dcd297ab16850280", "to": "0x41532c0decc835293dd1e3edd47eb5eb7a7677cf", "value": 188.1000391, "erc721TokenId": null, "erc1155Metadata": null, "tokenId": null, "asset": "BANK", "category": "token", "rawContract": {"value": "0x0a326994f6f8965800", "address": "0x2d94aa3e47d9d5024503ca8491fce9a2fb4da198", "decimal": "0x12"}}]}, "jsonrpc": "2.0"}');
+    const myString = dict;
+    console.log(typeof (myString));
+    if (typeof myString == 'string') {
+      const results = JSON.parse(dict);
+      const transactions = results["result"]["transfers"];
+      var txns = [];
+      for (var i = 0; i < transactions.length; i++) {
+        var transaction = transactions[i];
+        txns.push(<p> {transaction.value} {transaction.asset}</p>);
+        txns.push(<p> {transaction.hash}</p>);
+        txns.push(<form>
+          <h2>🤔 Name: </h2>
+          <input
+            type="text"
+            placeholder="e.g. My first NFT!"
+            onChange={(event) => setName(event.target.value)}
+          />
+          <h2>✍️ Description: </h2>
+          <input
+            type="text"
+            placeholder="e.g. Even cooler than cryptokitties ;)"
+            onChange={(event) => setDescription(event.target.value)}
+          />
+        </form>
+        );
+        txns.push(<button id="mintButton" onClick={onMintPressed}>
+          Mint NFT
+        </button>);
+        console.log(transaction['hash']);
+      }
+      return (<div className="Txns">{txns}</div>);
+    }
     return (
-      <div>
-        Aha
+      <div className="Txns">
       </div>
     )
-    // const results = JSON.parse(dict);
-    // const transactions = results["result"]["transfers"];
-    // return (
-    //   <div className="Txns">
-    //     {transactions.map(transaction => {
-    //       <div class="w3-card-4">
-    //         <p> {transaction['value']} {transaction['asset']}</p>
-    //         <p> {transaction['hash']}</p>
-    //       </div>
-    //     })}
-    //   </div>
-    // )
   }
 
   return (
@@ -125,8 +133,14 @@ const Minter = (props) => {
       <p>
         Simply add your asset's link, name, and description, then press "Mint. for all of your"
       </p>
-      <button id="txnButton" onClick={onMintPressed}>
-        See transactions
+      <h2>✍️ DAO Wallet Address: </h2>
+      <input
+        type="text"
+        placeholder="e.g. 0x000"
+        onChange={(event) => setDAOAddr(event.target.value)}
+      />
+      <button id="viewTxns" onClick={onTxnPressed}>
+        View Transactions
       </button>
       <div>
         <Txns></Txns>
