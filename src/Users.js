@@ -9,8 +9,10 @@ const MyMinter = (props) => {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [status, setStatus] = useState("");
-    const url = "https://gateway.pinata.cloud/ipfs/QmfQvb7QQG5DE6m8tFURE5Uuhu7dRU7TEaxRcSutmEPmQe";
-    const receiver = "0x6fbb53A21125d75Be8a8F08865fC8Fca79e6bfa6";
+    console.log(props.imgUrl);
+    console.log(props.receiver);
+    const url = props.imgUrl;
+    const receiver = props.receiver;
     const onMintPressed = async () => {
         const { success, status } = await mintNFT(url, name, description, receiver);
         setStatus(status);
@@ -21,8 +23,7 @@ const MyMinter = (props) => {
     };
 
     return (
-        <div className="Minter">
-
+        <div className="NewMinter">
             <br></br>
             <h1 id="title">🧙‍♂️ Alchemy NFT Minter</h1>
             <p>

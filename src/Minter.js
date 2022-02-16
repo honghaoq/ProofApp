@@ -81,7 +81,7 @@ const Minter = (props) => {
         var transaction = transactions[i];
         txns.push(<p> {transaction.value} {transaction.asset}</p>);
         txns.push(<p> {transaction.hash}</p>);
-        txns.push(<MyMinter></MyMinter>);
+        txns.push(<MyMinter imgUrl={url} receiver={walletAddress} />);
       }
       return (<div className="Txns">{txns}</div>);
     }
