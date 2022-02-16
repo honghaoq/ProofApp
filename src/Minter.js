@@ -9,6 +9,8 @@ import {
   getPayments
 } from "./util/txns.js";
 
+import MyMinter from './Users';
+
 const Minter = (props) => {
   const [walletAddress, setWallet] = useState("");
   const [status, setStatus] = useState("");
@@ -60,20 +62,10 @@ const Minter = (props) => {
     setWallet(walletResponse.address);
   };
 
-  const onMintPressed = async () => {
-    const { success, status } = await mintNFT(url, name, description, receiver);
-    setStatus(status);
-    if (success) {
-      setName("");
-      setDescription("");
-      setReceiver("");
-    }
-  };
-
   // example DAOAddr = '0x12bd9048b419838e25046040dcd297ab16850280';
   // example walletAddress = '0x41532c0decc835293dd1e3edd47eb5eb7a7677cf';
   const onTxnPressed = async () => {
-    const txns = await getPayments(DAOAddr, walletAddress);
+    const txns = await getPayments('0x12bd9048b419838e25046040dcd297ab16850280', '0x41532c0decc835293dd1e3edd47eb5eb7a7677cf');
     setTransaction(txns);
   }
 
@@ -88,25 +80,7 @@ const Minter = (props) => {
         var transaction = transactions[i];
         txns.push(<p> {transaction.value} {transaction.asset}</p>);
         txns.push(<p> {transaction.hash}</p>);
-        txns.push(<form>
-          <h2>🤔 Name: </h2>
-          <input
-            type="text"
-            placeholder="e.g. My first NFT!"
-            onChange={(event) => setName(event.target.value)}
-          />
-          <h2>✍️ Description: </h2>
-          <input
-            type="text"
-            placeholder="e.g. Even cooler than cryptokitties ;)"
-            onChange={(event) => setDescription(event.target.value)}
-          />
-        </form>
-        );
-        txns.push(<button id="mintButton" onClick={onMintPressed}>
-          Mint NFT
-        </button>);
-        console.log(transaction['hash']);
+        txns.push(<MyMinter></MyMinter>);
       }
       return (<div className="Txns">{txns}</div>);
     }
