@@ -79,9 +79,7 @@ const Minter = (props) => {
       var txns = [];
       for (var i = 0; i < transactions.length; i++) {
         var transaction = transactions[i];
-        // txns.push(<p> {transaction.value} {transaction.asset}</p>);
-        // txns.push(<p> {transaction.hash}</p>);
-        txns.push(<MyMinter imgUrl={url} receiver={walletAddress} txn = {transaction}/>);
+        txns.push(<MyMinter imgUrl={url} receiver={walletAddress} txn={transaction} />);
       }
       return (<div className="Txns">{txns}</div>);
     }
@@ -106,10 +104,10 @@ const Minter = (props) => {
       <br></br>
       <h1 id="title">🅿️ Proof of WORK</h1>
       <p>
-      Turn your wallet into Web3 work portfolio! Get NFTs for your work!
+        Turn your wallet into Web3 work portfolio! Get NFTs for your work!
       </p>
 
-  
+
       <h2>✍️ Enter DAO Wallet Address: </h2>
       <p>
         Simply add your asset's link, name, and description, to mint NFTs for your work"
@@ -124,7 +122,7 @@ const Minter = (props) => {
       </button>
 
       <h1 id="title">🔥 My Web3 Work Portfolio</h1>
-      
+
       <div>
         <Txns></Txns>
       </div>
@@ -133,7 +131,7 @@ const Minter = (props) => {
         {status}
       </p>
 
-      
+
     </div>
   );
 };

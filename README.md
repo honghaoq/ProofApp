@@ -1,6 +1,6 @@
 # 🅿️ Proof: Your on-chain work identity
 
-***Turn your wallet into your web3 contribution portfolio***
+***Turn your wallet into your web3 contribution portfolio***\
 members can own their work, build up their contribution portfolio, and help organizers better understand and develop their organizations.
 Please checkout our website for details: https://www.myproof.xyz/
 
